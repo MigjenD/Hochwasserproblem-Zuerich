@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hochwasserschutz: Sihl, Zürichsee, Limmat</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      color: #222;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1;
+      background: black;
+    }
+    #background-video {
+      position: fixed;
+      top: 0; left: 0;
+      min-width: 100vw;
+      min-height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+    }
+    header {
+      background: rgba(0, 95, 163, 0.85);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    header h1 { margin: 0 0 0.5rem 0; }
+    section {
+      max-width: 900px;
+      margin: auto;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.9);
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 { color: #005fa3; }
+    img.full {
+      width: 100%;
+      border-radius: 8px;
+    }
+    iframe { border: none; border-radius: 8px; }
+    footer {
+      background: rgba(0, 57, 90, 0.9);
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9em;
+    }
+    .timeline {
+      display: flex;
+      overflow-x: auto;
+      padding: 1rem 0;
+      gap: 1rem;
+    }
+    .timeline .card {
+      min-width: 200px;
+      background: #e6eef5;
+      border-left: 4px solid #005fa3;
+      padding: 1rem;
+      border-radius: 6px;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .timeline .card:hover { background: #d1e7ff; }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      z-index: 1000;
+      max-width: 90%;
+      max-height: 80%;
+      overflow-y: auto;
+    }
+    .popup img {
+      max-width: 100%;
+      margin-top: 1rem;
+      border-radius: 6px;
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+    .btn {
+      display: inline-block;
+      background: #005fa3;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      text-decoration: none;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+    .btn:hover { background: #003e6b; }
+    @media (max-width: 600px) {
+      section { padding: 1rem; }
+      .timeline { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+<video autoplay muted loop id="background-video">
+  <source src="https://cdn.coverr.co/videos/coverr-aerial-of-zurich-0275/1080p.mp4" type="video/mp4">
+  Ihr Browser unterstützt keine Videowiedergabe im Hintergrund.
+</video>
+
+<header>
+  <h1>Hochwasserschutz in Zürich</h1>
+  <p>Gefahren, Massnahmen und Zukunftsplanung an Sihl, Zürichsee und Limmat</p>
+</header>
+
+<!-- Inhalt bleibt unverändert -->
+
+<script>
+function showPopup(id) {
+  document.getElementById(id).style.display = 'block';
+  document.getElementById('overlay').style.display = 'block';
+}
+function hidePopup() {
+  document.querySelectorAll('.popup').forEach(p => p.style.display = 'none');
+  document.getElementById('overlay').style.display = 'none';
+}
+</script>
+</body>
+</html>
