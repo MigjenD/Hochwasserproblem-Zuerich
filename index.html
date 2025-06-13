@@ -1,202 +1,92 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<title>Das Hochwasserproblem in Zürich</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-
-    body { font-family: Arial, sans-serif; margin: 0; background: #f7f9fa; color: #222; }
-
-    header { background: #005fa3; color: #fff; padding: 2rem 1rem 1rem 1rem; text-align: center; }
-
-    nav { background: #e6eef5; padding: 1rem; text-align: center; }
-
-    nav button { margin: 0 10px; padding: 0.5rem 1rem; background: #005fa3; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
-
-    nav button:hover { background: #00395a; }
-
-    main { max-width: 1000px; margin: 2rem auto; padding: 1rem; background: #fff; border-radius: 10px; box-shadow: 0 2px 10px #ccc; }
-
-    h2 { color: #005fa3; margin-top: 2rem; }
-
-    .popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); background: #fff; border: 2px solid #005fa3; border-radius: 8px; padding: 2rem; z-index: 1001; box-shadow: 0 4px 20px #2225; max-width: 90vw; max-height: 80vh; overflow-y: auto; }
-
-    .popup img { max-width: 100%; border-radius: 8px; }
-
-    .popup-close { position: absolute; top: 10px; right: 20px; background: #005fa3; color: #fff; border: none; border-radius: 50%; width: 32px; height: 32px; font-size: 1.5rem; cursor: pointer; }
-
-    .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0008; z-index: 1000; }
-
-    .img-thumb { max-width: 300px; border-radius: 8px; margin: 1rem 0; cursor: pointer; border: 2px solid #005fa3; }
-
-    .info-btn { color: #005fa3; border: 1px solid #005fa3; background: #e6eef5; border-radius: 5px; padding: 0.2rem 0.7rem; cursor: pointer; margin-left: 0.5rem; }
-
-    .info-btn:hover { background: #cbe2f7; }
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hochwasserschutz: Sihl, Zürichsee, Limmat</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f4f7f9; color: #222; line-height: 1.6; }
+    header { background: #005fa3; color: white; padding: 2rem; text-align: center; }
+    header h1 { margin: 0 0 0.5rem 0; }
+    section { max-width: 900px; margin: auto; padding: 2rem; background: white; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    h2 { color: #005fa3; }
+    .timeline { border-left: 4px solid #005fa3; padding-left: 1rem; }
+    .event { margin-bottom: 1.5rem; }
+    .event h4 { margin: 0; }
+    img.full { width: 100%; border-radius: 8px; }
+    iframe { border: none; border-radius: 8px; }
+    footer { background: #00395a; color: white; text-align: center; padding: 2rem 1rem; font-size: 0.9em; }
     @media (max-width: 600px) {
-
-      main { padding: 0.5rem; }
-
-      .img-thumb { max-width: 95vw; }
-
+      section { padding: 1rem; }
     }
-</style>
+  </style>
 </head>
 <body>
+
 <header>
-<h1>Das Hochwasserproblem in Zürich</h1>
-<p>Gefährdung, Ursachen, Beispiele und Lösungen</p>
+  <h1>Hochwasserschutz in Zürich</h1>
+  <p>Gefahren, Massnahmen und Zukunftsplanung an Sihl, Zürichsee und Limmat</p>
 </header>
-<nav>
-<button onclick="showSection('problem')">Das Problem</button>
-<button onclick="showSection('beispiele')">Beispiele</button>
-<button onclick="showSection('massnahmen')">Massnahmen</button>
-<button onclick="showSection('karte')">Karte</button>
-<button onclick="showSection('galerie')">Galerie</button>
-</nav>
-<main>
-<section id="problem">
-<h2>Warum ist Zürich hochwassergefährdet?</h2>
-<p>
 
-        Zürich liegt zu grossen Teilen auf dem natürlichen Schwemmkegel der Sihl – einem Gebiet, das von Natur aus Überschwemmungen ausgesetzt ist. Durch die starke Siedlungsentwicklung seit 1850 hat sich das Risiko weiter erhöht. Besonders gefährdet sind zentrale Bereiche wie der Hauptbahnhof und das umliegende Stadtzentrum.<button class="info-btn" onclick="openPopup('popup1')">Mehr Info</button>
-</p>
-<div id="popup1" class="popup">
-<button class="popup-close" onclick="closePopup('popup1')">&times;</button>
-<h3>Hochwassergefahr in Zürich</h3>
-<ul>
-<li>Grosse Teile der Stadt befinden sich im Überschwemmungsgebiet der Sihl.</li>
-<li>Viele wichtige Infrastrukturen (Bahntunnels, unterirdische Anlagen, Rechenzentren) liegen im Untergrund und sind besonders anfällig.</li>
-<li>Das Schadenpotenzial ist enorm: Bei einem Extremhochwasser könnten Schäden von bis zu 6,7 Milliarden Franken entstehen.</li>
-</ul>
-</div>
-<div class="overlay" id="overlay" onclick="closeAllPopups()"></div>
-<img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Sihl_Limmat_Z%C3%BCrichsee.png" alt="Sihl, Limmat, Zürichsee" class="img-thumb" onclick="openPopup('popupMap')">
-<div id="popupMap" class="popup">
-<button class="popup-close" onclick="closePopup('popupMap')">&times;</button>
-<h3>Einzugsgebiet Sihl – Zürichsee – Limmat</h3>
-<img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Sihl_Limmat_Z%C3%BCrichsee.png" alt="Karte Einzugsgebiet">
-<p>Das Einzugsgebiet umfasst 2415 km² und erstreckt sich über sieben Kantone. Über 400 000 Menschen leben im Stadtgebiet von Zürich.<br>Quelle: Bundesamt für Landestopografie</p>
-</div>
+<section>
+  <h2>1. Hochwassergefahr in Zürich</h2>
+  <p>Zürich liegt auf dem Schwemmkegel der Sihl – einem natürlichen Überschwemmungsgebiet. 2005 entging die Stadt nur knapp einer Katastrophe, obwohl der Starkregen damals im Berner Oberland lag. Wäre er über dem Sihl-Einzugsgebiet niedergegangen, hätte das Wasser die Innenstadt bis 0,5 m hoch überflutet.</p>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Sihl_Limmat_Z%C3%BCrichsee.png" alt="Karte" class="full">
 </section>
-<section id="beispiele" style="display:none;">
-<h2>Historische Hochwasser in Zürich</h2>
-<ul>
-<li>
-<strong>1846 und 1874:</strong> Starke Überflutungen, als Zürich noch kleiner war.
-</li>
-<li>
-<strong>1910:</strong> Verheerendes Hochwasser, weite Teile der Stadt und Ebene bis Schlieren standen unter Wasser. Die Stadt war stark gewachsen und viele neue Gebäude lagen im Überschwemmungsgebiet.
-</li>
-<li>
-<strong>2005:</strong> Zürich entging nur knapp einer Katastrophe. Das Niederschlagszentrum lag im Berner Oberland – wäre es über dem Sihlgebiet gewesen, wäre die Innenstadt bis zu einem halben Meter überflutet worden.<button class="info-btn" onclick="openPopup('popup2005')">Details 2005</button>
-</li>
-</ul>
-<div id="popup2005" class="popup">
-<button class="popup-close" onclick="closePopup('popup2005')">&times;</button>
-<h3>Hochwasser 2005</h3>
-<p>
 
-          Beim Hochwasser 2005 erreichte der maximale Abfluss der Sihl 290 m³/s. Wäre der Starkregen direkt über dem Sihlgebiet gefallen, hätte das Wasser auf einer Fläche von 5 km² bis zu 0,5 Meter hoch gestanden. Die Schäden wären enorm gewesen, da viele sensible Anlagen im Untergrund betroffen gewesen wären.<br>
-<img src="https://www.stadt-zuerich.ch/content/dam/stzh/ugz/hochwasser/hochwasser-2005.jpg" alt="Hochwasser Zürich 2005" style="max-width:100%;border-radius:8px;">
-</p>
-</div>
+<section>
+  <h2>2. Historische Ereignisse</h2>
+  <div class="timeline">
+    <div class="event">
+      <h4>1846 & 1874</h4>
+      <p>Frühe Hochwasser – Zürich war noch klein, blieb aber nicht verschont.</p>
+    </div>
+    <div class="event">
+      <h4>1910</h4>
+      <p>Verheerendes Hochwasser – die Stadt war stark gewachsen, viele Gebäude lagen im Gefahrenbereich.</p>
+    </div>
+    <div class="event">
+      <h4>2005</h4>
+      <p>Nur knapp an einer Katastrophe vorbei – ein Alarmzeichen für zukünftige Extremereignisse.</p>
+    </div>
+  </div>
 </section>
-<section id="massnahmen" style="display:none;">
-<h2>Massnahmen zum Hochwasserschutz</h2>
-<ul>
-<li>
-<strong>Notfallplanung und Warnsysteme:</strong> Abläufe und Zuständigkeiten wurden seit 2005 verbessert.
-</li>
-<li>
-<strong>Erhöhung der Durchflusskapazität:</strong> Am Hauptbahnhof Zürich wurde die Flusssohle abgesenkt, um mehr Wasser durchzulassen.
-</li>
-<li>
-<strong>Bessere Prognosen:</strong> Moderne Modelle erlauben genaue Vorhersagen und rechtzeitige Reaktionen.
-</li>
-<li>
-<strong>Vorabsenkung der Seen:</strong> Zürichsee und Sihlsee dienen als Rückhaltebecken und können vor Unwettern abgesenkt werden.
-</li>
-<li>
-<strong>Langfristige Lösung: Entlastungsstollen Thalwil</strong><button class="info-btn" onclick="openPopup('popupStollen')">Wie funktioniert das?</button>
-</li>
-</ul>
-<div id="popupStollen" class="popup">
-<button class="popup-close" onclick="closePopup('popupStollen')">&times;</button>
-<h3>Entlastungsstollen Thalwil</h3>
-<img src="https://www.hochwasserschutz-zuerich.zh.ch/entlastungsstollen-thalwil.jpg" alt="Entlastungsstollen Thalwil" style="max-width:100%;border-radius:8px;">
-<p>
 
-          Der geplante Stollen leitet bei Hochwasser Sihlwasser oberhalb von Langnau am Albis direkt in den Zürichsee bei Thalwil. Er schützt Zürich und den Hauptbahnhof vor einer Sihl-Hochwasserspitze von bis zu 600 m³/s (Extremhochwasser, das statistisch alle 500 Jahre vorkommt). Die Kosten betragen rund 130 Millionen Franken – im Vergleich zu möglichen Schäden von bis zu 6,7 Milliarden Franken eine lohnende Investition.<br>
-
-          Der Stollen ist ca. 2 km lang und hat einen Durchmesser von 6,6 Metern.
-</p>
-</div>
-<p>
-<em>Weitere Massnahmen:</em> Erneuerung des Platzspitzwehrs, Ufererhöhungen bei Allmend Brunau, Verbesserungen an Brücken und Renaturierung von Flussabschnitten.
-</p>
+<section>
+  <h2>3. Schadenpotenzial heute</h2>
+  <p>Die Innenstadt, unterirdische Anlagen, Rechenzentren und Verkehrsknoten wie der Hauptbahnhof sind besonders gefährdet. Die potenziellen Schäden bei einem Extremhochwasser werden auf bis zu <strong>6,7 Milliarden Franken</strong> geschätzt – zuzüglich volkswirtschaftlicher Folgekosten.</p>
 </section>
-<section id="karte" style="display:none;">
-<h2>Karte: Gefährdung und Massnahmen</h2>
-<img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Sihl_Limmat_Z%C3%BCrichsee.png" alt="Karte Einzugsgebiet" class="img-thumb" onclick="openPopup('popupMap')">
-<p>
 
-        Die Karte zeigt das Einzugsgebiet von Sihl, Zürichsee und Limmat. Besonders gefährdet sind die Innenstadt, der Hauptbahnhof und das Sihltal. Viele Massnahmen sind entlang dieser Flüsse geplant oder bereits umgesetzt.
-</p>
-<iframe src="https://www.google.com/maps/d/embed?mid=1kKQnQe1n2p4iM8n9K9k6V3pKk6V" width="100%" height="480" style="border:0;border-radius:8px;"></iframe>
+<section>
+  <h2>4. Massnahmen seit 2005</h2>
+  <ul>
+    <li><strong>Notfallplanung & Warnsysteme</strong> verbessert</li>
+    <li><strong>Höhere Abflusskapazität</strong> beim Hauptbahnhof</li>
+    <li><strong>Bessere Prognosen</strong> mit IFKIS-Hydro & BAFU-Daten</li>
+    <li><strong>Vorabsenkung der Seen</strong> Zürichsee & Sihlsee als Rückhaltebecken</li>
+    <li><strong>Geschiebesammler, Schwemmholzrechen</strong> & neue Bauwerke</li>
+  </ul>
 </section>
-<section id="galerie" style="display:none;">
-<h2>Galerie: Hochwasser und Schutzmassnahmen</h2>
-<img src="https://www.stadt-zuerich.ch/content/dam/stzh/ugz/hochwasser/hochwasser-1910.jpg" alt="Hochwasser 1910" class="img-thumb" onclick="openPopup('popup1910')">
-<img src="https://www.stadt-zuerich.ch/content/dam/stzh/ugz/hochwasser/hochwasser-2005.jpg" alt="Hochwasser 2005" class="img-thumb" onclick="openPopup('popup2005')">
-<img src="https://www.hochwasserschutz-zuerich.zh.ch/entlastungsstollen-thalwil.jpg" alt="Entlastungsstollen Thalwil" class="img-thumb" onclick="openPopup('popupStollen')">
-<div id="popup1910" class="popup">
-<button class="popup-close" onclick="closePopup('popup1910')">&times;</button>
-<h3>Hochwasser 1910</h3>
-<img src="https://www.stadt-zuerich.ch/content/dam/stzh/ugz/hochwasser/hochwasser-1910.jpg" alt="Hochwasser 1910" style="max-width:100%;border-radius:8px;">
-<p>1910 wurde Zürich von einem verheerenden Hochwasser getroffen. Weite Teile der Stadt standen unter Wasser, die Schäden waren immens.</p>
-</div>
+
+<section>
+  <h2>5. Die langfristige Lösung: Entlastungsstollen Thalwil</h2>
+  <p>Ein geplanter Stollen (Länge: 2 km, Ø 6,6 m) soll künftig Hochwasserspitzen der Sihl oberhalb von Langnau am Albis in den Zürichsee bei Thalwil umleiten. Er schützt damit Zürich vor einem 500-jährlichen Extremhochwasser.</p>
+  <img src="https://www.hochwasserschutz-zuerich.zh.ch/entlastungsstollen-thalwil.jpg" alt="Entlastungsstollen Thalwil" class="full">
 </section>
-</main>
-<script>
 
-    function showSection(id) {
+<section>
+  <h2>6. Karte: Gefährdete Gebiete</h2>
+  <iframe src="https://map.geo.admin.ch/embed.html?topic=bafu&lang=de&bgLayer=ch.swisstopo.pixelkarte-farbe&E=2680000&N=1220000&zoom=6&layers=ch.bafu.wildruhezonen-jagdbanngebiete" width="100%" height="500"></iframe>
+</section>
 
-      ['problem','beispiele','massnahmen','karte','galerie'].forEach(s => {
+<section>
+  <h2>7. Fazit</h2>
+  <p>Die Stadt Zürich ist extrem hochwassergefährdet – und gleichzeitig das wirtschaftliche Herz der Schweiz. Dank umfassender Massnahmen und dem geplanten Entlastungsstollen Thalwil ist sie besser geschützt als je zuvor. Dennoch bleibt die Herausforderung bestehen: Der Klimawandel bringt neue Unsicherheiten. Nur mit fortlaufender Planung, Anpassung und gemeinsamer Verantwortung kann langfristige Sicherheit erreicht werden.</p>
+</section>
 
-        document.getElementById(s).style.display = (s === id) ? 'block' : 'none';
+<footer>
+  © 2025 Hochwasserschutz Zürich | Quelle: Kanton Zürich (AWEL) | Erstellt für Schulzwecke
+</footer>
 
-      });
-
-      closeAllPopups();
-
-    }
-
-    function openPopup(id) {
-
-      document.getElementById(id).style.display = 'block';
-
-      document.getElementById('overlay').style.display = 'block';
-
-    }
-
-    function closePopup(id) {
-
-      document.getElementById(id).style.display = 'none';
-
-      document.getElementById('overlay').style.display = 'none';
-
-    }
-
-    function closeAllPopups() {
-
-      document.querySelectorAll('.popup').forEach(el => el.style.display = 'none');
-
-      document.getElementById('overlay').style.display = 'none';
-
-    }
-</script>
 </body>
 </html>
- 
