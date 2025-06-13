@@ -18,15 +18,8 @@
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
       z-index: -1;
-      background: black;
-    }
-    #background-video {
-      position: fixed;
-      top: 0; left: 0;
-      min-width: 100vw;
-      min-height: 100vh;
-      object-fit: cover;
-      z-index: -1;
+      background: url('mein-hintergrund.jpg') no-repeat center center fixed;
+      background-size: cover;
     }
     header {
       background: rgba(0, 95, 163, 0.85);
@@ -122,10 +115,6 @@
   </style>
 </head>
 <body>
-<video autoplay muted loop id="background-video">
-  <source src="https://cdn.coverr.co/videos/coverr-aerial-of-zurich-0275/1080p.mp4" type="video/mp4">
-  Ihr Browser unterstützt keine Videowiedergabe im Hintergrund.
-</video>
 
 <header>
   <h1>Hochwasserschutz in Zürich</h1>
