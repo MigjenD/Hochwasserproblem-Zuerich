@@ -1,238 +1,186 @@
- (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
-diff --git a/index.html b/index.html
-index 994aef3b700be112439444ed75b745847d1756aa..37edc91c88632b56e6db89ecdd8285a2b0a84895 100644
---- a/index.html
-+++ b/index.html
-@@ -1,126 +1,178 @@
- <!DOCTYPE html>
- <html lang="de">
- <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <title>Hochwasserschutz in Zürich</title>
--  <style>
--    body, html {
--      margin: 0;
--      padding: 0;
--      font-family: 'Helvetica Neue', sans-serif;
--      color: #fff;
--      scroll-behavior: smooth;
--    }
-+  <style>
-+    body, html {
-+      margin: 0;
-+      padding: 0;
-+      font-family: 'Helvetica Neue', sans-serif;
-+      color: #fff;
-+      scroll-behavior: smooth;
-+    }
- 
-     .hero {
-       height: 100vh;
-       background: url('mein-hintergrund.jpg') no-repeat center center/cover;
-       position: relative;
-       display: flex;
-       justify-content: center;
-       align-items: center;
-       text-align: center;
-     }
- 
-     .overlay {
-       position: absolute;
-       background-color: rgba(0,0,0,0.5);
-       width: 100%;
-       height: 100%;
-       top: 0;
-       left: 0;
-     }
- 
-     .hero-content {
-       position: relative;
-       z-index: 1;
-       max-width: 800px;
-       padding: 20px;
-     }
- 
-     h1 {
-       font-size: 3em;
-       margin-bottom: 0.2em;
-     }
- 
-     h2 {
-       font-size: 2em;
-       margin-top: 40px;
-       color: #222;
-     }
- 
--    section {
--      padding: 60px 10%;
--      background-color: #f5f5f5;
--      color: #222;
--    }
-+    #mapContainer {
-+      position: sticky;
-+      top: 0;
-+      height: 100vh;
-+      z-index: 0;
-+    }
-+
-+    #story {
-+      position: relative;
-+      z-index: 1;
-+    }
-+
-+    #story section {
-+      min-height: 100vh;
-+      padding: 60px 10%;
-+      background-color: #f5f5f5;
-+      color: #222;
-+    }
- 
-     .highlight {
-       color: #0072ce;
-       font-weight: bold;
-     }
- 
-     .info-block {
-       margin-bottom: 40px;
-     }
- 
-     footer {
-       background-color: #222;
-       color: #ccc;
-       text-align: center;
-       padding: 20px;
-     }
- 
-     a {
-       color: #0072ce;
-     }
-+    #viewDiv {
-+      height: 100%;
-+      width: 100%;
-+    }
-+
-   </style>
-+  <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css">
-+  <script src="https://js.arcgis.com/4.26/"></script>
- </head>
- <body>
- 
--  <div class="hero">
--    <div class="overlay"></div>
--    <div class="hero-content">
--      <h1>Hochwasserschutz in Zürich</h1>
--      <p>Zwischen Gefahr und Lösung – Eine interaktive Reise durch Risiken, Massnahmen und Zukunftsstrategien</p>
--    </div>
--  </div>
--
--  <section id="gefahr">
--    <div class="info-block">
--      <h2>Gefährdungslage</h2>
--      <p>Zürich liegt zu grossen Teilen auf dem natürlichen Schwemmkegel der <span class="highlight">Sihl</span>. Bei einem Extremhochwasser wie 1846 wäre das Stadtzentrum meterhoch überflutet. Die Schäden könnten sich auf <span class="highlight">über 6,7 Milliarden Franken</span> belaufen.</p>
--    </div>
--    <div class="info-block">
--      <h2>Das Ereignis 2005</h2>
--      <p>2005 verfehlte Zürich eine Katastrophe nur knapp. Wäre der Starkregen über dem Sihlgebiet niedergegangen, hätte der <span class="highlight">Hauptbahnhof</span> unter Wasser gestanden.</p>
--    </div>
--  </section>
--
--  <section id="massnahmen">
--    <div class="info-block">
--      <h2>Sofort- und Langfristmassnahmen</h2>
--      <ul>
--        <li>Erhöhung der Durchflusskapazität beim Hauptbahnhof</li>
--        <li>Verbesserte Prognosesysteme (IFKIS-Hydro)</li>
--        <li><strong>Entlastungsstollen Thalwil:</strong> Umleitung von Hochwasserspitzen in den Zürichsee</li>
--        <li>Schwemmholzrechen oberhalb Langnau a. A.</li>
--      </ul>
--    </div>
--  </section>
--
--  <section id="zukunft">
--    <div class="info-block">
--      <h2>Ausblick</h2>
--      <p>Der geplante Entlastungsstollen könnte ab 2023 Realität werden. Damit würde Zürich gegen ein statistisches <span class="highlight">500-Jahres-Hochwasser</span> geschützt sein.</p>
--    </div>
--    <p>Weitere Infos: <a href="https://www.hochwasserschutz-zuerich.zh.ch" target="_blank">hochwasserschutz-zuerich.zh.ch</a></p>
--  </section>
-+  <div class="hero">
-+    <div class="overlay"></div>
-+    <div class="hero-content">
-+      <h1>Hochwasserschutz in Zürich</h1>
-+      <p>Zwischen Gefahr und Lösung – Eine interaktive Reise durch Risiken, Massnahmen und Zukunftsstrategien</p>
-+    </div>
-+  </div>
-+
-+  <div id="mapContainer">
-+    <div id="viewDiv"></div>
-+  </div>
-+
-+  <div id="story">
-+    <section class="step" id="gefahr" data-lon="8.5417" data-lat="47.3769" data-zoom="12">
-+      <div class="info-block">
-+        <h2>Gefährdungslage</h2>
-+        <p>Zürich liegt zu grossen Teilen auf dem natürlichen Schwemmkegel der <span class="highlight">Sihl</span>. Bei einem Extremhochwasser wie 1846 wäre das Stadtzentrum meterhoch überflutet. Die Schäden könnten sich auf <span class="highlight">über 6,7 Milliarden Franken</span> belaufen.</p>
-+      </div>
-+      <div class="info-block">
-+        <h2>Das Ereignis 2005</h2>
-+        <p>2005 verfehlte Zürich eine Katastrophe nur knapp. Wäre der Starkregen über dem Sihlgebiet niedergegangen, hätte der <span class="highlight">Hauptbahnhof</span> unter Wasser gestanden.</p>
-+      </div>
-+    </section>
-+
-+    <section class="step" id="massnahmen" data-lon="8.5335" data-lat="47.3782" data-zoom="13">
-+      <div class="info-block">
-+        <h2>Sofort- und Langfristmassnahmen</h2>
-+        <ul>
-+          <li>Erhöhung der Durchflusskapazität beim Hauptbahnhof</li>
-+          <li>Verbesserte Prognosesysteme (IFKIS-Hydro)</li>
-+          <li><strong>Entlastungsstollen Thalwil:</strong> Umleitung von Hochwasserspitzen in den Zürichsee</li>
-+          <li>Schwemmholzrechen oberhalb Langnau a. A.</li>
-+        </ul>
-+      </div>
-+    </section>
-+
-+    <section class="step" id="zukunft" data-lon="8.5714" data-lat="47.3084" data-zoom="12">
-+      <div class="info-block">
-+        <h2>Ausblick</h2>
-+        <p>Der geplante Entlastungsstollen könnte ab 2023 Realität werden. Damit würde Zürich gegen ein statistisches <span class="highlight">500-Jahres-Hochwasser</span> geschützt sein.</p>
-+      </div>
-+      <p>Weitere Infos: <a href="https://www.hochwasserschutz-zuerich.zh.ch" target="_blank">hochwasserschutz-zuerich.zh.ch</a></p>
-+    </section>
-+  </div>
-+
- 
-   <footer>
-     &copy; 2025 Geographie-Projekt – Kanton Zürich, AWEL | Bild: Benutzer
-   </footer>
-+<script>
-+require(["esri/Map","esri/views/MapView"], function(Map, MapView){
-+  var map = new Map({ basemap: "topo-vector" });
-+  var view = new MapView({
-+    container: "viewDiv",
-+    map: map,
-+    center: [8.5417, 47.3769],
-+    zoom: 12
-+  });
-+
-+  var steps = document.querySelectorAll('.step');
-+  var observer = new IntersectionObserver(function(entries){
-+    entries.forEach(function(entry){
-+      if(entry.isIntersecting){
-+        var lon = parseFloat(entry.target.dataset.lon);
-+        var lat = parseFloat(entry.target.dataset.lat);
-+        var zoom = parseInt(entry.target.dataset.zoom, 10);
-+        view.goTo({ center: [lon, lat], zoom: zoom });
-+      }
-+    });
-+  }, { threshold: 0.5 });
-+
-+  steps.forEach(function(step){ observer.observe(step); });
-+});
-+</script>
- 
- </body>
- </html>
- 
-EOF
-)
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hochwasserschutz in Zürich</title>
+
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- ArcGIS JS API -->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css">
+  <script src="https://js.arcgis.com/4.29/"></script>
+
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    .hero {
+      height: 100vh;
+      background: url('mein-hintergrund.jpg') no-repeat center center/cover;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+    }
+
+    .overlay {
+      position: absolute;
+      background-color: rgba(0,0,0,0.5);
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      padding: 20px;
+    }
+
+    h1 { font-size: 3em; margin-bottom: 0.2em; }
+    h2 { font-size: 2em; margin-top: 40px; color: #222; }
+    p, ul { font-size: 1.1em; }
+
+    section {
+      padding: 60px 10%;
+      background-color: #f5f5f5;
+      color: #222;
+    }
+
+    .highlight { color: #0072ce; font-weight: bold; }
+    .info-block { margin-bottom: 40px; }
+
+    .map-container {
+      height: 500px;
+      margin: 40px 0;
+      border: 2px solid #ccc;
+    }
+
+    footer {
+      background-color: #222;
+      color: #ccc;
+      text-align: center;
+      padding: 20px;
+    }
+
+    a { color: #0072ce; }
+  </style>
+</head>
+<body>
+
+  <!-- Startseite -->
+  <div class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>Hochwasserschutz in Zürich</h1>
+      <p>Zwischen Gefahr und Lösung – Eine interaktive Reise durch Risiken, Massnahmen und Zukunftsstrategien</p>
+    </div>
+  </div>
+
+  <!-- Gefahren -->
+  <section id="gefahr">
+    <div class="info-block">
+      <h2>Gefährdungslage</h2>
+      <p>Zürich liegt zu grossen Teilen auf dem natürlichen Schwemmkegel der <span class="highlight">Sihl</span>. Bei einem Extremhochwasser wie 1846 wäre das Stadtzentrum meterhoch überflutet. Die Schäden könnten sich auf <span class="highlight">über 6,7 Milliarden Franken</span> belaufen.</p>
+    </div>
+  </section>
+
+  <!-- Leaflet Karte -->
+  <section id="karte-leaflet">
+    <h2>Gefahrengebiet: Hauptbahnhof Zürich</h2>
+    <div id="leaflet-map" class="map-container"></div>
+  </section>
+
+  <!-- Massnahmen -->
+  <section id="massnahmen">
+    <div class="info-block">
+      <h2>Massnahmen</h2>
+      <ul>
+        <li>Erhöhung der Durchflusskapazität beim Hauptbahnhof</li>
+        <li>Verbesserte Prognosesysteme (IFKIS-Hydro)</li>
+        <li><strong>Entlastungsstollen Thalwil:</strong> Umleitung von Hochwasserspitzen in den Zürichsee</li>
+        <li>Schwemmholzrechen oberhalb Langnau a. A.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ArcGIS Karte -->
+  <section id="karte-arcgis">
+    <h2>Projekt: Entlastungsstollen Thalwil</h2>
+    <div id="arcgis-map" class="map-container"></div>
+  </section>
+
+  <!-- Ausblick -->
+  <section id="zukunft">
+    <h2>Ausblick</h2>
+    <p>Der geplante Entlastungsstollen könnte ab 2023 Realität werden. Damit würde Zürich gegen ein statistisches <span class="highlight">500-Jahres-Hochwasser</span> geschützt sein.</p>
+    <p>Weitere Infos: <a href="https://www.hochwasserschutz-zuerich.zh.ch" target="_blank">hochwasserschutz-zuerich.zh.ch</a></p>
+  </section>
+
+  <footer>
+    &copy; 2025 Geographie-Projekt – Kanton Zürich, AWEL | Bild: Benutzer
+  </footer>
+
+  <!-- Leaflet Karte konfigurieren -->
+  <script>
+    const map = L.map('leaflet-map').setView([47.378, 8.540], 14); // Zürich HB
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+    L.marker([47.378, 8.540]).addTo(map)
+      .bindPopup('<b>Gefahrenpunkt:</b><br>Hauptbahnhof Zürich')
+      .openPopup();
+  </script>
+
+  <!-- ArcGIS JS API konfigurieren -->
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/Graphic"
+    ], function(Map, MapView, Graphic) {
+      const map = new Map({
+        basemap: "topo-vector"
+      });
+
+      const view = new MapView({
+        container: "arcgis-map",
+        map: map,
+        center: [8.564, 47.293], // Thalwil
+        zoom: 12
+      });
+
+      const point = {
+        type: "point",
+        longitude: 8.564,
+        latitude: 47.293
+      };
+
+      const markerSymbol = {
+        type: "simple-marker",
+        color: "blue",
+        size: "12px"
+      };
+
+      const pointGraphic = new Graphic({
+        geometry: point,
+        symbol: markerSymbol
+      });
+
+      view.graphics.add(pointGraphic);
+    });
+  </script>
+
+</body>
+</html>
